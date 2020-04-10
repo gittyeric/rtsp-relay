@@ -1,3 +1,5 @@
+(TODO: This fork modifies the original by supporting multiple sources)
+
 # rtsp-relay
 RTSP stream relay server with codec passthrough, so that no encoding will take place and low CPU will be used.
 
