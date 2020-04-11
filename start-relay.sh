@@ -15,7 +15,7 @@ if [[ $SOURCE_URLS == file://* ]]; then
 fi
 
 touch proxy.yaml
-python generate_config.py "$SOURCE_URLS" "$STREAM_NAMES" RTSP_PROXY_SOURCE_TCP
+python3 generate_config.py "$SOURCE_URLS" "$STREAM_NAMES" RTSP_PROXY_SOURCE_TCP
 
 if [[ $SOURCE_URLS == rtsp://* ]] && [ "$FORCE_FFMPEG_SOURCE" == "false" ]; then
    echo "Starting rtsp proxy from $SOURCE_URLS to rtsp://0.0.0.0:8554/<$STREAM_NAMES>"
