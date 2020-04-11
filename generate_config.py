@@ -47,11 +47,11 @@ for i in range(len(stream_urls)):
   '#!/bin/bash' + \
   'echo "Start relaying from ' + url + ' to rtsp://0.0.0.0:8554/' + name + '"\n' + \
   'while true; do\n' + \
-  'set -x\n' + \
-  'ffmpeg $FFMPEG_INPUT_ARGS -i ' + url + ' $FFMPEG_OUTPUT_ARGS -f rtsp rtsp://127.0.0.1:8554/' + name + '\n' + \
-  'set +x\n' + \
-  'echo "Reconnecting..."\n' + \
-  'sleep 1\n' + \
+  '  set -x\n' + \
+  '  ffmpeg $FFMPEG_INPUT_ARGS -i ' + url + ' $FFMPEG_OUTPUT_ARGS -f rtsp rtsp://127.0.0.1:8554/' + name + '\n' + \
+  '  set +x\n' + \
+  '  echo "Reconnecting..."\n' + \
+  '  sleep 1\n' + \
   'done'
 
   with open("start-proxy-" + str(i), "w") as proxy_runner:
