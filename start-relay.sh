@@ -2,20 +2,24 @@
 
 set -e
 
+# Backwards compat
 if [[ $SOURCE_URLS == "" ]] && [ $SOURCE_URL != "" ]; then
   export SOURCE_URLS=$SOURCE_URL
+fi
+if [[ $STREAM_NAMES == "" ]] && [ $STREAM_NAME != "" ]; then
+  export STREAM_NAMES=$STREAM_NAME
 fi
 
 if [[ $SOURCE_URLS == file://* ]]; then
    export FFMPEG_INPUT_ARGS="$FFMPEG_INPUT_ARGS -re -stream_loop -1"
 fi
 
-if [[ $SOURCE_URLS == rtsp://* ]] && [ "$FORCE_FFMPEG_SOURCE" == "false" ]; then
-   touch proxy.yaml
-   python generate_config.py "$SOURCE_URLS" "$STREAM_NAMES" RTSP_PROXY_SOURCE_TCP
-   echo "Starting rtsp proxy from $SOURCE_URLS to rtsp://0.0.0.0:8554/$STREAM_NAME..."
-   rtsp-simple-proxy /proxy.yml
+touch proxy.yaml
+python generate_config.py "$SOURCE_URLS" "$STREAM_NAMES" RTSP_PROXY_SOURCE_TCP
 
+if [[ $SOURCE_URLS == rtsp://* ]] && [ "$FORCE_FFMPEG_SOURCE" == "false" ]; then
+   echo "Starting rtsp proxy from $SOURCE_URLS to rtsp://0.0.0.0:8554/<$STREAM_NAMES>"
+   rtsp-simple-proxy /proxy.yml
 else
 
    if [ "$SOURCE_URLS" != "" ]; then
