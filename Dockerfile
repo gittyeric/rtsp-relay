@@ -19,8 +19,6 @@ RUN go mod download
 RUN go build -o /go/bin/rtsp-simple-proxy .
 
 
-
-
 FROM jrottenberg/ffmpeg:4.0-alpine
 
 EXPOSE 8554
@@ -35,11 +33,11 @@ ENV FFMPEG_INPUT_ARGS ''
 ENV FFMPEG_OUTPUT_ARGS='-c copy'
 
 RUN apk --update add gettext bash
+RUN apk add --update-cache python3
 
 COPY --from=BUILD /go/bin/rtsp-simple-server /bin/rtsp-simple-server
 COPY --from=BUILD /go/bin/rtsp-simple-proxy /bin/rtsp-simple-proxy
 
-ADD proxy.yml /tmp/proxy.yml
 ADD start-relay.sh /
 
 ENTRYPOINT [ "/bin/bash" ]
