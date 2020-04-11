@@ -39,6 +39,8 @@ COPY --from=BUILD /go/bin/rtsp-simple-server /bin/rtsp-simple-server
 COPY --from=BUILD /go/bin/rtsp-simple-proxy /bin/rtsp-simple-proxy
 
 ADD start-relay.sh /
+ADD generate_config.py /
+ADD proxy-loop.sh /
 
 ENTRYPOINT [ "/bin/bash" ]
 
