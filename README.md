@@ -1,4 +1,4 @@
-(TODO: This fork modifies the original by supporting multiple sources)
+(Note: This fork modifies the original by supporting multiple sources)
 
 # rtsp-relay
 RTSP stream relay server with codec passthrough, so that no encoding will take place and low CPU will be used.
@@ -31,7 +31,7 @@ services:
       - 8554:8554
     restart: always
     environment:
-        - SOURCE_URL=http://ip-thomasmarina.greatlakescam.com/user/cgi-bin/getstream.cgi?10&&&&0&0&0&0&0
+        - SOURCE_URLS=http://ip-thomasmarina.greatlakescam.com/user/cgi-bin/getstream.cgi?10&&&&0&0&0&0&0
 ```
 
 * VLC -> File -> Open Network... -> URL "rtsp://localhost:8554/stream" -> Open
@@ -40,9 +40,9 @@ services:
 
 ## ENVs
 
-* SOURCE_URL - source media URL to be used as input for RTSP stream. Cannot be empty
+* SOURCE_URLS - comma-separated source media URLs to be used as inputs for RTSP streams. Cannot be empty and all URLs must use the same protocol.
 * RTSP_PROXY_SOURCE_TCP - whetever source RTSP stream is UDP ('no') or TCP ('yes'). defaults to no
-* STREAM_NAME - path for "rtsp://[host]:[port]/[STREAM_NAME]. default to 'stream'
+* STREAM_NAMES - Comma-separated paths for "rtsp://[host]:[port]/[STREAM_NAME]. defaults to 'stream<stream number if more than 1 stream>'
 * FORCE_FFMPEG_SOURCE - use RTSP proxy when in/out (false) are RTSP streams or force to use FFMPEG restream even in this case (true). defaults to false. use for CPU usage comparisons
 * FFMPEG_ARGS - additional arguments to ffmpeg publisher. ex: "-err_detect aggressive -fflags discardcorrupt"
 * FFMPEG_INPUT_ARGS - ffmpeg args applied near input params. ex.: '-v 10'. defaults to ''
@@ -62,7 +62,7 @@ services:
     ports:
         - 8554:8554
     environment:
-        - SOURCE_URL=file:///samples/cars1.mp4
+        - SOURCE_URLS=file:///samples/cars1.mp4
     volumes:
         - ./samples:/samples
 ```
