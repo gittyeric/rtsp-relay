@@ -6,11 +6,14 @@ RTSP_PROXY_SOURCE_TCP = sys.argv[3]
 
 stream_urls = SOURCE_URLS.split(",")
 stream_names = STREAM_NAMES.split(",")
+stream_count = len(stream_urls)
 
 if STREAM_NAMES == "" or len(stream_names) == 0:
-  stream_names = ["stream" + (i+1) for i in range(len(stream_urls))]
+  stream_names = "stream"
+  if stream_count == 1:
+    stream_names = ["stream" + ((i+1) for i in range(len(stream_urls)))]
 
-if len(stream_urls) != len(stream_names):
+if stream_count != len(stream_names):
   raise ValueError('Number of STREAM_NAMES must match number of SOURCE_URLS')
 
 yaml = \
